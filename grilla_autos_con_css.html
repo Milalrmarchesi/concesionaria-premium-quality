@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Grilla de Autos - Concesionario</title>
+    <style>
+        body {
+            background-color:  rgb(227, 227, 227);
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .car-card {
+            background-color: #1a1a3c;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .car-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            background-color: white;
+        }
+        .car-name {
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .car-info {
+            background-color: #001050;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+        .info-item::before {
+            content: "✔";
+            color: #2d96cd;
+            margin-right: 8px;
+        }
+        .btn-cotizar {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #1700f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-cotizar:hover {
+            background-color: #2d96cd;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">¡¡Nuestros Autos!!</h1>
+    <div class="grid-container">
+        
+        <div class="car-card">
+            <img src="https://www.ford.com.ar/content/ford/ar/es_ar/mustang/fds/billboard-carousel/overview-model/jcr:content/par/billboard_1889760740/imageComponent/image.imgs.full.high.jpg" alt="Ford Mustang">
+            <div class="car-name"></Main>Ford Mustang</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2023/06/Proyecto-nuevo.png">
+            <div class="car-name">Ford Ranger</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+
+        
+
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/bronco-1-jpg.webp" alt="Ford Bronco">
+            <div class="car-name">Ford Bronco</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2021/05/Proyecto-nuevo-80.png" alt="Ford Kuga Híbrida">
+            <div class="car-name">Ford Kuga Híbrida</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/everest.png" alt="Ford Everest">
+            <div class="car-name">Ford Everest</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2020/09/raptor1-jpg.webp">
+            <div class="car-name">Ford F-150</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2023/06/Proyecto-nuevo-14.png" alt="Ford Territory">
+            <div class="car-name">Ford Territory</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/dietrich_ford__0007_TransitFurgon-221x120.png" alt="Ford Transit Van">
+            <div class="car-name">Ford Transit Van</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2022/01/Proyecto-nuevo-2025-04-25T150507.200.png" alt="Ford Maverick">
+            <div class="car-name">Ford Maverik</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+        <div class="car-card">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/Proyecto-nuevo-53.png" alt="Mustang Mach-E">
+            <div class="car-name">Mustang Mach-E</div>
+            <div class="car-info">
+                <div class="info-item">Entrega desde Cuota 2</div>
+                <div class="info-item">Tasa 0% durante todo el Plan</div>
+                <div class="info-item">Financiación Hasta 80%</div>
+                <div class="info-item">Tomamos tu Usado</div>
+                <div class="info-item">Hasta 84 Cuotas</div>
+                <a href="cotizar.html" class="btn-cotizar">COTIZAR</a>
+            </div>
+        </div>
+    
+    </div>
+</body>
+</html>
