@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Financiación - Premium Quality</title>
+  <style>
+    body {
+      background-color: rgb(227, 227, 227);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: white;
+    }
+
+    header, section {
+      background-color: #1a1a3c;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #2d96cd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #001050;
+      color: white;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #444;
+      text-align: center;
+    }
+
+    th {
+      background-color: #2d96cd;
+    }
+
+    .btn-cotizar {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #1700f4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .btn-cotizar:hover {
+      background-color: #2d96cd;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    input, select, textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    label {
+      font-weight: bold;
+    }
+    .notificacion {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 6px solid #28a745;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.cerrar {
+  float: right;
+  font-weight: bold;
+  cursor: pointer;
+  color: #155724;
+  background: none;
+  border: none;
+  font-size: 16px;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Financiación y Plan de Ahorro</h1>
+    <p>Elegí el modelo que te interesa y simulá tu plan. Contamos con financiación bancaria, directa y planes 0% interés. ¡Consultá sin compromiso!</p>
+  </header>
+
+  <section>
+    <h2>Simulador de Planes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Precio Estimado</th>
+          <th>Entrega Asegurada Desde</th>
+          <th>Cuotas (Plan 84)</th>
+          <th>Financiación</th>
+          <th>Simular</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ford Mustang</td>
+          <td>$55.000.000</td>
+          <td>Cuota 3</td>
+          <td>$954.000</td>
+          <td>80% financiado</td>
+          <td><a href="#formulario" class="btn-cotizar">COTIZAR</a></td>
+        </tr>
+        <tr>
+          <td>Ford Ranger</td>
+          <td>$42.000.000</td>
+          <td>Cuota 3</td>
+          <td>$699.000</td>
+          <td>70% financiado</td>
+          <td><a href="#formulario" class="btn-cotizar">COTIZAR</a></td>
+        </tr>
+        <tr>
+          <td>Ford Kuga Híbrida</td>
+          <td>$48.000.000</td>
+          <td>Cuota 3</td>
+          <td>$967.000</td>
+          <td>75% financiado</td>
+          <td><a href="#formulario" class="btn-cotizar">COTIZAR</a></td>
+        </tr>
+        <tr>
+          <td>Ford Bronco</td>
+          <td>$60.000.000</td>
+          <td>Cuota 3</td>
+          <td>$1.220.000</td>
+          <td>80% financiado</td>
+          <td><a href="#formulario" class="btn-cotizar">COTIZAR</a></td>
+        </tr>
+        <tr>
+          <td>Ford F-150</td>
+          <td>$1.170.000</td>
+          <td>Cuota 3</td>
+          <td>$825.000</td>
+          <td>80% financiado</td>
+          <td><a href="#formulario" class="btn-cotizar">COTIZAR</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="formulario">
+    <h2>Solicitá tu Cotización</h2>
+    <form action="#" method="post">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="modelo">Modelo</label>
+      <select id="modelo" name="modelo">
+        <option>Ford Mustang</option>
+        <option>Ford Ranger</option>
+        <option>Ford Kuga</option>
+        <option>Ford Bronco</option>
+        <option>Ford F-150</option>
+      </select>
+
+      <label for="mensaje">Consulta</label>
+      <textarea id="mensaje" rows="4" name="mensaje"></textarea>
+
+      <button type="submit" class="btn-cotizar">Enviar</button>
+
+  </section>
+
+  <section>
+    <h2>Información Legal</h2>
+    <p>Los valores son orientativos y pueden cambiar según la cotización del dólar, tasas bancarias y condiciones comerciales del mes. Planes sujetos a aprobación crediticia.</p>
+  </section>
+
+  <section>
+    <h2>Servicio de Venta y Postventa</h2>
+    <p>Contamos con servicio técnico especializado, repuestos originales y garantía oficial. Nuestro compromiso no termina con la entrega, comienza ahí.</p>
+  </section>
+
+<div class="notificacion" id="notificacion">
+  <button class="cerrar" onclick="cerrarNotificacion()">×</button>
+  ✅ Información enviada correctamente.
+</div>
+
+<script>
+  function mostrarNotificacion() {
+    const noti = document.getElementById('notificacion');
+    noti.style.display = 'block';
+
+    setTimeout(() => {
+      noti.style.display = 'none';
+    }, 5000);
+  }
+
+  function cerrarNotificacion() {
+    document.getElementById('notificacion').style.display = 'none';
+  }
+
+  document.getElementById('formulario').addEventListener('submit', function(e) {
+    e.preventDefault(); // evita recarga
+    mostrarNotificacion();
+    this.reset(); // limpia el formulario si querés
+  });
+</script>
+</body>
+</html>
+
