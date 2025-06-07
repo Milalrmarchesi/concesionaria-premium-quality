@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Autos - Concesionario</title>
+    <style>
+        /* Estilos generales de la página */
+        body {
+            background-color: rgb(227, 227, 227);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Encabezado principal */
+        .encabezado {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a1a3c, #001050);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .encabezado:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Contenedor de la grilla de autos */
+        .contenedor-grilla {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Tarjeta individual de auto */
+        .tarjeta-auto {
+            background: linear-gradient(to bottom, #1a1a3c, #001050);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        /* Efecto al pasar el ratón sobre la tarjeta */
+        .tarjeta-auto:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to bottom, #1e1e4a, #00115a);
+        }
+        
+        /* Imagen del auto */
+        .tarjeta-auto img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: white;
+            border-bottom: 3px solid #1700f4;
+            transition: transform 0.5s ease, filter 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        
+        /* Nombre del auto */
+        .nombre-auto {
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.3em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover .nombre-auto {
+            color: #2d96cd;
+            letter-spacing: 1.2px;
+        }
+        
+        /* Contenedor de información del auto */
+        .info-auto {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover .info-auto {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Elemento individual de información */
+        .elemento-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.95em;
+            color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover .elemento-info {
+            transform: translateX(5px);
+        }
+        
+        /* Icono de verificación */
+        .elemento-info::before {
+            content: "✓";
+            color: #2d96cd;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover .elemento-info::before {
+            transform: scale(1.2);
+            color: #3aa8e8;
+        }
+        
+        /* Contenedor para los colores disponibles */
+        .contenedor-colores {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover .contenedor-colores {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Título de colores disponibles */
+        .titulo-colores {
+            font-size: 0.95em;
+            margin-bottom: 10px;
+            color: #f0f0f0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .tarjeta-auto:hover .titulo-colores {
+            letter-spacing: 0.5px;
+        }
+        
+        /* Lista de colores en esferas */
+        .lista-colores {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        /* Esfera de color individual */
+        .esfera-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .esfera-color:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Botón de cotización */
+        .btn-cotizar {
+            margin-top: 10px;
+            padding: 12px;
+            background: linear-gradient(to right, #1700f4, #2d96cd);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Efecto hover en botón */
+        .btn-cotizar:hover {
+            background: linear-gradient(to right, #2d96cd, #1700f4);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+        
+        /* Pie de página */
+        .pie-pagina {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #555;
+            font-size: 0.9em;
+            border-top: 1px solid #ccc;
+        }
+        
+        /* Media Querie para darle responsividad o sea que ande en varios formatos */
+        @media (max-width: 768px) {
+            .contenedor-grilla {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .encabezado {
+                font-size: 1.5em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .contenedor-grilla {
+                grid-template-columns: 1fr;
+            }
+            
+            .tarjeta-auto img {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado de la página -->
+    <div class="encabezado">
+        <h1>¡Catálogo de Autos Disponibles!</h1>
+        <p>Descubre nuestra amplia gama de vehículos con las mejores condiciones de financiación</p>
+    </div>
+    
+    <!-- Contenedor principal de la grilla de autos -->
+    <div class="contenedor-grilla">
+        
+        <!-- Tarjeta para Ford Mustang -->
+        <div class="tarjeta-auto">
+            <img src="https://www.ford.com.ar/content/ford/ar/es_ar/mustang/fds/billboard-carousel/overview-model/jcr:content/par/billboard_1889760740/imageComponent/image.imgs.full.high.jpg" alt="Ford Mustang">
+            <div class="nombre-auto">Ford Mustang</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #FF0000;"></div> <!-- Rojo -->
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #0000FF;"></div> <!-- Azul -->
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+
+        <!-- Tarjeta para Ford Ranger -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2023/06/Proyecto-nuevo.png" alt="Ford Ranger">
+            <div class="nombre-auto">Ford Ranger</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #964B00;"></div> <!-- Marrón -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+
+        <!-- Tarjeta para Ford Bronco -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/bronco-1-jpg.webp" alt="Ford Bronco">
+            <div class="nombre-auto">Ford Bronco</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #008000;"></div> <!-- Verde -->
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #FF0000;"></div> <!-- Rojo -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Ford Kuga Híbrida -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2021/05/Proyecto-nuevo-80.png" alt="Ford Kuga Híbrida">
+            <div class="nombre-auto">Ford Kuga Híbrida</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #FFA500;"></div> <!-- Naranja -->
+                        <div class="esfera-color" style="background-color: #0000FF;"></div> <!-- Azul -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Ford Everest -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/everest.png" alt="Ford Everest">
+            <div class="nombre-auto">Ford Everest</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #FF0000;"></div> <!-- Rojo -->
+                        <div class="esfera-color" style="background-color: #0000FF;"></div> <!-- Azul -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Ford F-150 -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2020/09/raptor1-jpg.webp" alt="Ford F-150">
+            <div class="nombre-auto">Ford F-150</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                        <div class="esfera-color" style="background-color: #964B00;"></div> <!-- Marrón -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Ford Territory -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2023/06/Proyecto-nuevo-14.png" alt="Ford Territory">
+            <div class="nombre-auto">Ford Territory</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #FF0000;"></div> <!-- Rojo -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #0000FF;"></div> <!-- Azul -->
+                        <div class="esfera-color" style="background-color: #FFD700;"></div> <!-- Oro -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Ford Transit Van -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/dietrich_ford__0007_TransitFurgon-221x120.png" alt="Ford Transit Van">
+            <div class="nombre-auto">Ford Transit Van</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #0000FF;"></div> <!-- Azul -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Ford Maverick -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2022/01/Proyecto-nuevo-2025-04-25T150507.200.png" alt="Ford Maverick">
+            <div class="nombre-auto">Ford Maverick</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #FF0000;"></div> <!-- Rojo -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #0000FF;"></div> <!-- Azul -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    
+        <!-- Tarjeta para Mustang Mach-E -->
+        <div class="tarjeta-auto">
+            <img src="https://ford.grupodietrich.com/wp-content/uploads/sites/3/2016/12/Proyecto-nuevo-53.png" alt="Mustang Mach-E">
+            <div class="nombre-auto">Mustang Mach-E</div>
+            <div class="info-auto">
+                <div class="elemento-info">Entrega desde la cuota 2</div>
+                <div class="elemento-info">Tasa 0% durante todo el plan</div>
+                <div class="elemento-info">Financiación hasta el 80%</div>
+                <div class="elemento-info">Tomamos tu vehículo usado</div>
+                <div class="elemento-info">Hasta 84 cuotas disponibles</div>
+                
+                <!-- colores disponibles -->
+                <div class="contenedor-colores">
+                    <div class="titulo-colores">Colores disponibles:</div>
+                    <div class="lista-colores">
+                        <div class="esfera-color" style="background-color: #808080;"></div> <!-- Gris -->
+                        <div class="esfera-color" style="background-color: #FFFFFF;"></div> <!-- Blanco -->
+                        <div class="esfera-color" style="background-color: #000000;"></div> <!-- Negro -->
+                        <div class="esfera-color" style="background-color: #FF0000;"></div> <!-- Rojo -->
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar">📝 COTIZAR AHORA</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pie de página -->
+    <div class="pie-pagina">
+        <p>Concesionario de Autos Premium - Todos los derechos reservados © 2023</p>
+        <p>Visítanos en nuestra sucursal: Av. Principal 1234, Ciudad</p>
+        <p>Teléfono: (123) 456-7890 | Email: info@concesionario.com</p>
+    </div>
+</body>
+</html>

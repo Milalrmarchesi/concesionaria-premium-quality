@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Grilla de Autos Usados - Concesionario</title>
+    <style>
+        /* ESTILOS ORIGINALES */
+        body {
+            background-color:  rgb(227, 227, 227);
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .car-card {
+            background-color: #1a1a3c;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease; /* Añadido para hover suave */
+        }
+        .car-card:hover {
+            transform: translateY(-5px); /* Efecto de levantar */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+            background-color: #1e1e4a; /* Cambio sutil de color */
+        }
+        .car-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            background-color: white;
+            transition: transform 0.3s ease; /* Para efecto zoom */
+        }
+        .car-card:hover img {
+            transform: scale(1.05); /* Zoom leve en la imagen */
+        }
+        .car-name {
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s ease; /* Transición para el hover */
+        }
+        .car-card:hover .car-name {
+            color: #2d96cd; /* Cambio de color al pasar el mouse */
+        }
+        .car-info {
+            background-color: #001050;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: background-color 0.3s ease; /* Transición suave */
+        }
+        .car-card:hover .car-info {
+            background-color: #00115a; /* Cambio sutil de color */
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            transition: transform 0.2s ease; /* Para efecto hover */
+        }
+        .car-card:hover .info-item {
+            transform: translateX(5px); /* Desplazamiento derecho */
+        }
+        .info-item::before {
+            content: "✔";
+            color: #2d96cd;
+            margin-right: 8px;
+            transition: transform 0.2s ease; /* Animación del check */
+        }
+        .car-card:hover .info-item::before {
+            transform: scale(1.2); /* Check más grande */
+        }
+        .btn-cotizar {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #1700f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease; /* Transición para hover */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .btn-cotizar:hover {
+            background-color: #2d96cd;
+            transform: translateY(-2px); /* Efecto de levantar */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra al hover */
+            letter-spacing: 0.5px; /* Efecto de separación */
+        }
+        
+        /* ESTILOS CSS */
+        .etiqueta-usado {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            transition: all 0.3s ease; /* Para efecto hover */
+        }
+        .car-card:hover .etiqueta-usado {
+            transform: scale(1.1); /* Ligero agrandamiento */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra */
+        }
+        .contenedor-imagen {
+            position: relative;
+            overflow: hidden; /* Para contener el zoom de la imagen */
+        }
+        .equipamiento {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease; /* Para efecto hover */
+        }
+        .car-card:hover .equipamiento {
+            background-color: rgba(0, 0, 0, 0.3); /* Fondo más oscuro */
+        }
+        .titulo-equipamiento {
+            text-align: center;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            color: #2d96cd;
+            transition: all 0.3s ease; /* Para efecto hover */
+        }
+        .car-card:hover .titulo-equipamiento {
+            letter-spacing: 1px; /* Separación de letras */
+        }
+        .lista-equipamiento {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .item-equipamiento {
+            background-color: rgba(45, 150, 205, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease; /* Para efecto hover */
+        }
+        .item-equipamiento:hover {
+            background-color: rgba(45, 150, 205, 0.4); /* Fondo más intenso */
+            transform: scale(1.05); /* Ligero agrandamiento */
+        }
+        .detalles-auto {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .detalle-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            margin: 0 3px;
+            transition: all 0.3s ease; /* Para efecto hover */
+        }
+        .car-card:hover .detalle-item {
+            transform: translateY(-3px); /* Efecto de levantar */
+        }
+        .detalle-item strong {
+            display: block;
+            color: #2d96cd;
+            font-size: 1em;
+            transition: color 0.3s ease; /* Para efecto hover */
+        }
+        .car-card:hover .detalle-item strong {
+            color: #3aa8e8; /* Color más claro al pasar mouse */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <h1 style="text-align:center;">¡¡Autos Usados Disponibles!!</h1>
+    <div class="grid-container">
+        
+        <!-- Volkswagen Gol Trend -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0e3b0d7d0f6c4d6a9a1a7d4d0b3d0c4b.jpg" alt="Volkswagen Gol Trend">
+                <div class="etiqueta-usado">Semi nuevo</div>
+            </div>
+            <div class="car-name">Volkswagen Gol Trend</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2019
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 45.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $3.200.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 6 meses</div>
+                <div class="info-item">Revisión técnica completa</div>
+                <div class="info-item">Único dueño</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-snowflake"></i> Aire</div>
+                        <div class="item-equipamiento"><i class="fas fa-volume-up"></i> Bluetooth</div>
+                        <div class="item-equipamiento"><i class="fas fa-shield-alt"></i> Airbag</div>
+                        <div class="item-equipamiento"><i class="fas fa-fire"></i> GNC</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+
+        <!-- Ford Fiesta Kinetic -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://www.diariomotor.com/imagenes/2017/07/ford-fiesta-2017-01.jpg" alt="Ford Fiesta Kinetic">
+                <div class="etiqueta-usado">Excelente estado</div>
+            </div>
+            <div class="car-name">Ford Fiesta Kinetic</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2018
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 52.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $3.500.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 12 meses</div>
+                <div class="info-item">Nafta/GNC</div>
+                <div class="info-item">Airbags y ABS</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-touchscreen"></i> Pantalla</div>
+                        <div class="item-equipamiento"><i class="fas fa-car-side"></i> Sensores</div>
+                        <div class="item-equipamiento"><i class="fas fa-shield-alt"></i> 6 Airbags</div>
+                        <div class="item-equipamiento"><i class="fas fa-bluetooth"></i> SYNC</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+
+        <!-- Toyota Hilux -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0b8d4c5a4d2a42a4b7d4d0b3d0c4b.jpg" alt="Toyota Hilux">
+                <div class="etiqueta-usado">Semi nuevo</div>
+            </div>
+            <div class="car-name">Toyota Hilux</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2020
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 40.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $8.500.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 12 meses</div>
+                <div class="info-item">Doble cabina</div>
+                <div class="info-item">4x4</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-camera"></i> Cámara</div>
+                        <div class="item-equipamiento"><i class="fas fa-tachometer-alt"></i> Crucero</div>
+                        <div class="item-equipamiento"><i class="fas fa-truck-monster"></i> 4x4</div>
+                        <div class="item-equipamiento"><i class="fas fa-tools"></i> Dif.</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+        <!-- Renault Clio -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://www.renault.com.ar/content/dam/renault/ar/clio-5p/renault-clio-5p.jpg.ximg.l_12_m.smart.jpg" alt="Renault Clio">
+                <div class="etiqueta-usado">Buen estado</div>
+            </div>
+            <div class="car-name">Renault Clio</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2017
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 60.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $2.900.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 6 meses</div>
+                <div class="info-item">Aire acondicionado</div>
+                <div class="info-item">Dirección asistida</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-snowflake"></i> Aire</div>
+                        <div class="item-equipamiento"><i class="fas fa-volume-up"></i> Radio</div>
+                        <div class="item-equipamiento"><i class="fas fa-lock"></i> Cierre</div>
+                        <div class="item-equipamiento"><i class="fas fa-fire"></i> GNC</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+        <!-- Peugeot 208 -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0a3b0d7d0f6c4d6a9a1a7d4d0b3d0c4b.jpg" alt="Peugeot 208">
+                <div class="etiqueta-usado">Semi nuevo</div>
+            </div>
+            <div class="car-name">Peugeot 208</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2019
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 48.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $3.800.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 9 meses</div>
+                <div class="info-item">Pantalla táctil</div>
+                <div class="info-item">Cámara de retroceso</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-touchscreen"></i> Pantalla</div>
+                        <div class="item-equipamiento"><i class="fas fa-camera"></i> Cámara</div>
+                        <div class="item-equipamiento"><i class="fas fa-lightbulb"></i> LED</div>
+                        <div class="item-equipamiento"><i class="fas fa-bluetooth"></i> Android</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+        <!-- Fiat Palio -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0d3b0d7d0f6c4d6a9a1a7d4d0b3d0c4b.jpg" alt="Fiat Palio">
+                <div class="etiqueta-usado">Buen estado</div>
+            </div>
+            <div class="car-name">Fiat Palio</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2016
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 70.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $2.100.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 3 meses</div>
+                <div class="info-item">Mecánica revisada</div>
+                <div class="info-item">Bajo consumo</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-snowflake"></i> Aire</div>
+                        <div class="item-equipamiento"><i class="fas fa-volume-up"></i> MP3</div>
+                        <div class="item-equipamiento"><i class="fas fa-lock"></i> Cierre</div>
+                        <div class="item-equipamiento"><i class="fas fa-fire"></i> GNC</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+        <!-- Honda Civic -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0c3b0d7d0f6c4d6a9a1a7d4d0b3d0c4b.jpg" alt="Honda Civic">
+                <div class="etiqueta-usado">Excelente estado</div>
+            </div>
+            <div class="car-name">Honda Civic</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2018
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 55.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $5.200.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 12 meses</div>
+                <div class="info-item">Full equipo</div>
+                <div class="info-item">Cámara 360°</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-touchscreen"></i> Pantalla</div>
+                        <div class="item-equipamiento"><i class="fas fa-camera"></i> 360°</div>
+                        <div class="item-equipamiento"><i class="fas fa-car-side"></i> Sensores</div>
+                        <div class="item-equipamiento"><i class="fas fa-shield-alt"></i> 8 Airbags</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+        <!-- Ford Focus -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0f3b0d7d0f6c4d6a9a1a7d4d0b3d0c4b.jpg" alt="Ford Focus">
+                <div class="etiqueta-usado">Semi nuevo</div>
+            </div>
+            <div class="car-name">Ford Focus</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2019
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 42.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $4.500.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 9 meses</div>
+                <div class="info-item">Tecnología SYNC 3</div>
+                <div class="info-item">Asistente de estacionamiento</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-touchscreen"></i> SYNC 3</div>
+                        <div class="item-equipamiento"><i class="fas fa-car-side"></i> Autoestac.</div>
+                        <div class="item-equipamiento"><i class="fas fa-tachometer-alt"></i> Crucero</div>
+                        <div class="item-equipamiento"><i class="fas fa-lightbulb"></i> Xenon</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+        <!-- Volkswagen Amarok -->
+        <div class="car-card">
+            <div class="contenedor-imagen">
+                <img src="https://acroadtrip.blob.core.windows.net/catalogo-imagenes/s/RT_V_0e3b0d7d0f6c4d6a9a1a7d4d0b3d0c4b_2.jpg" alt="Volkswagen Amarok">
+                <div class="etiqueta-usado">Excelente estado</div>
+            </div>
+            <div class="car-name">Volkswagen Amarok</div>
+            <div class="car-info">
+                <div class="detalles-auto">
+                    <div class="detalle-item">
+                        <strong>Año</strong> 2020
+                    </div>
+                    <div class="detalle-item">
+                        <strong>KM</strong> 38.000
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Precio</strong> $9.800.000
+                    </div>
+                </div>
+                
+                <div class="info-item">Garantía de 12 meses</div>
+                <div class="info-item">Motor 3.0 V6 TDI</div>
+                <div class="info-item">Doble tracción</div>
+                
+                <div class="equipamiento">
+                    <div class="titulo-equipamiento">Equipamiento Destacado</div>
+                    <div class="lista-equipamiento">
+                        <div class="item-equipamiento"><i class="fas fa-touchscreen"></i> Pantalla</div>
+                        <div class="item-equipamiento"><i class="fas fa-camera"></i> Cámara</div>
+                        <div class="item-equipamiento"><i class="fas fa-tools"></i> Dif.</div>
+                        <div class="item-equipamiento"><i class="fas fa-truck-monster"></i> 4Motion</div>
+                    </div>
+                </div>
+                
+                <a href="cotizar.html" class="btn-cotizar"><i class="fas fa-phone-alt"></i> CONSULTAR</a>
+            </div>
+        </div>
+    
+    </div>
+</body>
+</html>
