@@ -3,26 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <title>Financiación - Premium Quality</title>
-  <style>
-    body {
-      background-color: rgb(227, 227, 227);
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      color: white;
+  
+</head>
+<body>
+<style>
+   
+   body {
+    background-color: rgb(227, 227, 227);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: white;
     }
-
-    header, section {
-      background-color: #1a1a3c;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  header, section {
+    background-color: rgb(227, 227, 227);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
 
     h1, h2 {
       text-align: center;
-      color: #2d96cd;
+      color: 99,64,205
     }
 
     table {
@@ -46,7 +49,7 @@
     .btn-cotizar {
       display: inline-block;
       padding: 8px 16px;
-      background-color: #1700f4;
+      background-color: rgb(99, 64, 205);
       color: white;
       border: none;
       border-radius: 5px;
@@ -54,6 +57,9 @@
       text-decoration: none;
       font-weight: bold;
     }
+     .btn-cotizar:hover {
+      background-color: rgb(203, 23, 188);
+     }
 
     .btn-cotizar:hover {
       background-color: #2d96cd;
@@ -100,11 +106,28 @@
   font-size: 16px;
 }
 
-  </style>
-</head>
-<body>
+.info-doble {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem;
+}
 
+.columna-info {
+  flex: 1;
+}
+
+.columna-info h2 {
+  margin-bottom: 0.5rem;
+}
+
+.columna-info p {
+  line-height: 1.5;
+}
+
+</style>
   <header>
+
     <h1>Financiación y Plan de Ahorro</h1>
     <p>Elegí el modelo que te interesa y simulá tu plan. Contamos con financiación bancaria, directa y planes 0% interés. ¡Consultá sin compromiso!</p>
   </header>
@@ -191,42 +214,26 @@
       <button type="submit" class="btn-cotizar">Enviar</button>
 
   </section>
+  
 
-  <section>
+
+<div class="info-doble">
+  <section class="columna-info">
     <h2>Información Legal</h2>
     <p>Los valores son orientativos y pueden cambiar según la cotización del dólar, tasas bancarias y condiciones comerciales del mes. Planes sujetos a aprobación crediticia.</p>
   </section>
-
-  <section>
+  <section class="columna-info">
     <h2>Servicio de Venta y Postventa</h2>
     <p>Contamos con servicio técnico especializado, repuestos originales y garantía oficial. Nuestro compromiso no termina con la entrega, comienza ahí.</p>
   </section>
+</section>
 
-<div class="notificacion" id="notificacion">
+
+<!--<div class="notificacion" id="notificacion">
   <button class="cerrar" onclick="cerrarNotificacion()">×</button>
-  ✅ Información enviada correctamente.
-</div>
+   Información enviada correctamente.
+</div>--->
 
-<script>
-  function mostrarNotificacion() {
-    const noti = document.getElementById('notificacion');
-    noti.style.display = 'block';
-
-    setTimeout(() => {
-      noti.style.display = 'none';
-    }, 5000);
-  }
-
-  function cerrarNotificacion() {
-    document.getElementById('notificacion').style.display = 'none';
-  }
-
-  document.getElementById('formulario').addEventListener('submit', function(e) {
-    e.preventDefault(); // evita recarga
-    mostrarNotificacion();
-    this.reset(); // limpia el formulario si querés
-  });
-</script>
 </body>
 </html>
 
